@@ -1,1 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+* {
+     font-family: 'Open Sans', sans-serif !important; 
+}
+
+body, html {
+     margin: 0;
+     padding: 0;
+ }
+ 
+ .left, .right {
+     /* float:left; */
+     /* width: calc(50% - 6em); */
+     /* padding: 3em; */
+ }
+ 
+ input[type="text"] {
+     width: 100%;
+     padding: 5px;
+     margin-bottom: 10px;
+ }
+
+ .mat-tab-body-content {
+     overflow: visible !important;
+ }
+
+ .mat-tab-body.mat-tab-body-active {
+     overflow-x: visible !important;
+     overflow-y: visible !important;
+ }
