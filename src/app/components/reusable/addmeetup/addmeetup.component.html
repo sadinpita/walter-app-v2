@@ -1,1 +1,21 @@
-<p>addmeetup works!</p>
+<h1 mat-dialog-title>Dodavanje novog unosa</h1>
+<div mat-dialog-content>
+     <p>Unesite ime novog radnika u prazno polje.</p>
+
+     <mat-form-field>
+          <mat-select placeholder="Select" [(ngModel)]="selectedValue">
+               <mat-option *ngFor="let worker of workers" value="{{worker.name}}">{{worker.name}}</mat-option>
+          </mat-select>
+     </mat-form-field>
+
+     <mat-form-field style="width: 100%;">
+               <input matInput #time>
+     </mat-form-field>
+
+</div>
+<div mat-dialog-actions>
+     <button mat-button [mat-dialog-close]="data.name" cdkFocusInitial (click)="addEntry(selectedValue, time.value)">Dodaj</button>
+     <button mat-button (click)="onNoClick()">Odustani</button>
+</div>
+
+
