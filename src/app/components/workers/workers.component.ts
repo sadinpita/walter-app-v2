@@ -2,10 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
-
 import { Observable } from 'rxjs';
-
-
 import * as WorkerActions from '../../actions/worker.actions';
 import { Worker } from '../../models/worker.model';
 
@@ -37,6 +34,9 @@ export class WorkersComponent implements OnInit {
 
      ngOnInit() {
           this.checkWorkersCount();
+          this.store.select(state => state).subscribe(data => {
+               console.log('data00: ', data);
+          });
      }
 
      openDialog (): void {

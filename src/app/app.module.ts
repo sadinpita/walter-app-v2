@@ -33,6 +33,10 @@ import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 
+// Reducers.
+import { reducerWorker } from './reducers/worker.reducer';
+// import { reducerMeetup } from './reducers/meetup.reducer';
+
 // Components.
 import { WorkersComponent } from './components/workers/workers.component';
 import { MeetingsComponent } from './components/meetings/meetings.component';
@@ -66,13 +70,9 @@ import { SearchPipe } from './filters/search.pipe';
           appRoutes,
           { enableTracing: true } // <-- debugging purposes only
      ),
-     StoreModule.forRoot(reducers, {
-      metaReducers,
-      runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true
-      }
-    })
+     StoreModule.forRoot({
+          worker: reducerWorker
+     })
   ],
   exports: [
      AddWorkerDialog

@@ -1,0 +1,49 @@
+.add-worker-btn {
+     background-color: #3f51b5;
+     color: white;
+}
+
+.workers-wrapper {
+     background-color: #f9f9f9;
+     padding: 20px;
+     margin-top: 50px;
+     border-radius: 3px;
+     width: 100%;
+}
+
+table tr:nth-child(2n) {
+     background-color: #fefefe !important;
+}
+
+table tr:nth-child(2n-1) {
+     background-color: #f5f5f5;
+}
+
+table tr {
+     transition: 0.3s ease;
+}
+
+table tr:hover {
+     /* background-color: #3f51b5; */
+     /* color: white; */
+}
+
+.worker-single {
+     font-size: 13px;
+     display: flex;
+     align-items: center;
+     position: relative;
+     height: 45px;
+     padding: 0px 0px 0px 15px;
+}
+
+.worker-single-btns {
+     right: 0;
+     position: absolute;
+}
+
+.w-btn {
+     line-height: 16px;
+     font-size: 12px;
+     margin: 3px;
+}

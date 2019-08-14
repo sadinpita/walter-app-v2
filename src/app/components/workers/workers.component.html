@@ -6,27 +6,33 @@
      </div>
 
      <button mat-button (click)="openDialog()" class="add-worker-btn">Dodaj radnika</button>
-     
-     <div class="workers-wrapper">
-          <div *ngFor="let worker of workers | async | search:['name', searchText]; let i = index;" >
-               <div *ngIf="worker.editing === false" class="worker-single">
-                    {{worker.name}}
-                    <div class="worker-single-btns">
-                         <button mat-stroked-button color="primary" class="w-btn" (click)="editWorker(i)">Izmijeni</button>
-                         <button mat-stroked-button color="accent" class="ml-10 w-btn" (click)="delWorker(i)">Obriši</button>
-                    </div>
-               </div>
 
-               <div *ngIf="worker.editing === true" class="worker-single">
-                    <mat-form-field class="example-full-width">
-                         <input matInput placeholder="Unesi ime" value="{{worker.name}}" #newname>
-                    </mat-form-field>
-                    <div class="worker-single-btns">
-                         <button mat-stroked-button color="primary" class="w-btn" (click)="saveWorker(i, newname.value)">Spremi</button>
-                         <button mat-stroked-button color="accent" class="ml-10 w-btn" disabled>Obriši</button>
+
+     <table class="workers-wrapper">
+          <tbody>
+               <tr *ngFor="let worker of workers | async | search:['name', searchText]; let i = index;">
+                    <div *ngIf="worker.editing === false" class="worker-single">
+                         {{worker.name}}
+                         <div class="worker-single-btns">
+                              <button mat-stroked-button color="primary" class="w-btn" (click)="editWorker(i)">Izmijeni</button>
+                              <button mat-stroked-button color="accent" class="ml-10 w-btn" (click)="delWorker(i)">Obriši</button>
+                         </div>
                     </div>
-               </div>
-          </div>
-          <p class="workers-count">Ukupno zaposlenih: {{workersCount}}</p>
-     </div>
+     
+                    <div *ngIf="worker.editing === true" class="worker-single">
+                         <mat-form-field class="example-full-width">
+                              <input matInput placeholder="Unesi ime" value="{{worker.name}}" #newname>
+                         </mat-form-field>
+                         <div class="worker-single-btns">
+                              <button mat-stroked-button color="primary" class="w-btn" (click)="saveWorker(i, newname.value)">Spremi</button>
+                              <button mat-stroked-button color="accent" class="ml-10 w-btn" disabled>Obriši</button>
+                         </div>
+                    </div>
+     
+               </tr>
+          </tbody>
+          
+     </table>
+     
+
 </div>
