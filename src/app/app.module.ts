@@ -35,13 +35,13 @@ import { reducers, metaReducers } from './reducers';
 
 // Reducers.
 import { reducerWorker } from './reducers/worker.reducer';
-// import { reducerMeetup } from './reducers/meetup.reducer';
+import { reducerMeetup } from './reducers/meetup.reducer';
 
 // Components.
 import { WorkersComponent } from './components/workers/workers.component';
 import { MeetingsComponent } from './components/meetings/meetings.component';
 import { AddWorkerDialog } from './components/reusable/addworker/addworker.component';
-import { AddmeetupComponent } from './components/reusable/addmeetup/addmeetup.component';
+import { AddMeetupDialog } from './components/reusable/addmeetup/addmeetup.component';
 import { SearchPipe } from './filters/search.pipe';
 
 @NgModule({
@@ -50,7 +50,7 @@ import { SearchPipe } from './filters/search.pipe';
     WorkersComponent,
     MeetingsComponent,
     AddWorkerDialog,
-    AddmeetupComponent,
+    AddMeetupDialog,
     SearchPipe
   ],
   imports: [
@@ -71,14 +71,17 @@ import { SearchPipe } from './filters/search.pipe';
           { enableTracing: true } // <-- debugging purposes only
      ),
      StoreModule.forRoot({
-          worker: reducerWorker
+          worker: reducerWorker,
+          meetup: reducerMeetup
      })
   ],
   exports: [
-     AddWorkerDialog
+     AddWorkerDialog,
+     AddMeetupDialog
   ],
   entryComponents: [
-     AddWorkerDialog
+     AddWorkerDialog,
+     AddMeetupDialog
   ],
   providers: [],
   bootstrap: [AppComponent]

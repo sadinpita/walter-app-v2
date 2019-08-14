@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Action } from '@ngrx/store'
-import { DailyScrum } from './../models/dailyscrum.model'
+import { Meetup } from './../models/meetup.model'
 
 export const ADD_ENTRY       = '[ENTRY] Add'
 export const REMOVE_ENTRY    = '[ENTRY] Remove'
@@ -11,7 +11,7 @@ export const CANCEL_ENTRY    = '[ENTRY] Cancel'
 export class AddEntry implements Action {
     readonly type = ADD_ENTRY
 
-    constructor(public payload: DailyScrum) {}
+    constructor(public payload: Meetup) {}
 }
 
 export class RemoveEntry implements Action {
