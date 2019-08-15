@@ -21,6 +21,7 @@ export class AddMeetupDialog implements OnInit {
 
      workers = null;
      selectedValue: string;
+     currentId: number;
 
      constructor (
           private store: Store<AppState>,
@@ -30,23 +31,47 @@ export class AddMeetupDialog implements OnInit {
      ngOnInit(): void {
           this.store.select(state => state).subscribe(data => {
                this.workers = data.worker
-               console.log('data: ', data.worker);
           });
+     }
+
+     checkWorker (val) {
+          this.currentId = val.id;
      }
 
      onNoClick (): void {
           this.dialogRef.close();
      }
 
-     addEntry  (name: string, time: string) {
-          console.log('addNewEntry: ', name, time);
+     addEntry  (workerId: number, time: string, id: any) {
+          console.log('addEntry id: ', workerId);
+          let workerName = null;
+          let workersArr = null;
           let dailyentries = null;
 
           this.store.select(state => state).subscribe(data => {
-               dailyentries = data.worker
+               console.log('dataX: ', data);
+               dailyentries = data.meetup
+               workersArr = data.worker
           });
 
-          let newId = dailyentries.length + 1;
+          for (let i = 0; i <= workersArr.length - 1; i++) {
+               console.log('workerId: ', workerId, ' workersArr[i]: ', workersArr[i].id);
+               if (workersArr[i].id == workerId) {
+                    workerName = workersArr[i].name;
+                    console.log('izmijenio sam ime: ', workerName);
+               }
+          }
+
+          let max = 0;
+          for (let i = 0; i <= dailyentries.length - 1; i++) {
+               if (dailyentries[i].id > max) {
+                    max = dailyentries[i].id;
+               }
+          }
+
+          let newId = max + 1;
+          console.log('newId: ', newId);
+
           let vrijemeDolaska = time;
           let late: boolean;
 
@@ -56,7 +81,6 @@ export class AddMeetupDialog implements OnInit {
           const prag_dolaska = 31500; // Broj sekundi koji je ustvari 8 sati i 45 minuta (8:45 je prag dolaska na vrijeme).
 
           let fields = vrijemeDolaska.split(':');
-          console.log('evo fieldsa: ', fields);
 
           let hours = fields[0];
           let minutes = fields[1];
@@ -78,8 +102,7 @@ export class AddMeetupDialog implements OnInit {
                uslov_m = true;
           }
 
-          console.log('2: ', newId, name, time, late);
-          this.store.dispatch(new MeetupActions.AddEntry({id: newId, name: name, time: time, late: late, editing: false}) )
+          this.store.dispatch(new MeetupActions.AddEntry({id: newId, userId: this.currentId, name: workerName, time: time, late: late, editing: false}) )
      }
 
      

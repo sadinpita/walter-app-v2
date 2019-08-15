@@ -4,7 +4,7 @@
 
      <mat-form-field>
           <mat-select placeholder="Select" [(ngModel)]="selectedValue">
-               <mat-option *ngFor="let worker of workers" value="{{worker.name}}">{{worker.name}}</mat-option>
+               <mat-option *ngFor="let worker of workers" value="{{worker.id}}" (click)="checkWorker(worker);">{{worker.name}}</mat-option>
           </mat-select>
      </mat-form-field>
 

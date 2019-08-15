@@ -12,10 +12,18 @@ export function reducerWorker(state: Worker[] = [initialStateWorker], action: Wo
         case WorkerActions.ADD_WORKER:
             return [...state, action.payload];
         case WorkerActions.REMOVE_WORKER:
-          state.splice(action.payload, 1)
+          for (let i = 0; i <= state.length - 1; i++) {
+               if (action.payload === state[i].id) {
+                    state.splice(i, 1)
+               }
+          }
           return state;
         case WorkerActions.EDIT_WORKER:
-          state[action.payload].editing = true;
+          for (let i = 0; i <= state.length - 1; i++) {
+               if (action.payload === state[i].id) {
+                    state[i].editing = true;
+               }
+          }          
           return state;
         case WorkerActions.SAVE_WORKER:
           state[action.payload].editing = false;

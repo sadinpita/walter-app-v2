@@ -14,17 +14,17 @@
                     <div *ngIf="worker.editing === false" class="worker-single">
                          {{worker.name}}
                          <div class="worker-single-btns">
-                              <button mat-stroked-button color="primary" class="w-btn" (click)="editWorker(i)">Izmijeni</button>
-                              <button mat-stroked-button color="accent" class="ml-10 w-btn" (click)="delWorker(i)">Obriši</button>
+                              <button mat-stroked-button color="primary" class="w-btn" (click)="editWorker(i, worker.id)">Izmijeni</button>
+                              <button mat-stroked-button color="accent" class="ml-10 w-btn" (click)="delWorker(i, worker.id)">Obriši</button>
                          </div>
                     </div>
      
                     <div *ngIf="worker.editing === true" class="worker-single">
-                         <mat-form-field class="example-full-width">
+                         <mat-form-field class="example-full-width" style="height: 40px;">
                               <input matInput placeholder="Unesi ime" value="{{worker.name}}" #newname>
                          </mat-form-field>
                          <div class="worker-single-btns">
-                              <button mat-stroked-button color="primary" class="w-btn" (click)="saveWorker(i, newname.value)">Spremi</button>
+                              <button mat-stroked-button color="primary" class="w-btn" (click)="saveWorker(i, newname.value, worker.id)">Spremi</button>
                               <button mat-stroked-button color="accent" class="ml-10 w-btn" disabled>Obriši</button>
                          </div>
                     </div>

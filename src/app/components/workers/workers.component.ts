@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { Observable } from 'rxjs';
 import * as WorkerActions from '../../actions/worker.actions';
+import * as MeetupActions from '../../actions/meetup.actions';
 import { Worker } from '../../models/worker.model';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -14,9 +15,9 @@ export interface DialogData {
 }
 
 @Component({
-  selector: 'app-workers',
-  templateUrl: './workers.component.html',
-  styleUrls: ['./workers.component.css']
+     selector: 'app-workers',
+     templateUrl: './workers.component.html',
+     styleUrls: ['./workers.component.css']
 })
 
 export class WorkersComponent implements OnInit {
@@ -35,7 +36,6 @@ export class WorkersComponent implements OnInit {
      ngOnInit() {
           this.checkWorkersCount();
           this.store.select(state => state).subscribe(data => {
-               console.log('data00: ', data);
           });
      }
 
@@ -46,23 +46,38 @@ export class WorkersComponent implements OnInit {
           });
 
           dialogRef.afterClosed().subscribe(result => {
-               console.log('The dialog was closed');
                this.name = result;
           });
      }
 
-     editWorker (index) {
-          this.store.dispatch(new WorkerActions.EditWorker(index));
-          // this.workers[index].editing = true;
+     editWorker (index, id: number) {
+          let radnici = null;
+          this.store.select(state => state).subscribe(data => {
+               radnici = data.worker
+          });
+          for (let i = 0; i <= radnici.length - 1; i++) {
+               if (id === radnici[i].id) {
+                    this.store.dispatch(new WorkerActions.EditWorker(id));
+               }
+          }
      }
 
-     delWorker (index) {
-          this.store.dispatch(new WorkerActions.RemoveWorker(index));
+     delWorker (index, id: number) {
+          let radnici = null;
+          this.store.select(state => state).subscribe(data => {
+               radnici = data.worker
+          });
+          for (let i = 0; i <= radnici.length - 1; i++) {
+               if (id === radnici[i].id) {
+                    this.store.dispatch(new WorkerActions.RemoveWorker(id));
+               }
+          }
           this.checkWorkersCount();
      }
 
-     saveWorker (index, newname) {
+     saveWorker (index, newname, id: number) {
           this.store.dispatch(new WorkerActions.SaveWorker(index, newname));
+          this.changeNameInMeetups(id, newname);
           this.checkWorkersCount();
      }
 
@@ -72,4 +87,8 @@ export class WorkersComponent implements OnInit {
           });
      }
 
+     changeNameInMeetups (id, newname) {
+          this.store.dispatch(new MeetupActions.ChangeNames(id, newname));
+     }
 }
+

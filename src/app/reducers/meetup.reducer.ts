@@ -3,7 +3,7 @@ import { Meetup } from './../models/meetup.model'
 import * as MeetupActions from '../actions/meetup.actions'
 
 const initialStateDailyscrum: Meetup = {
-     id: 1, name: 'Sadin', time: '08:00', late: false, editing: false
+     id: 1, userId: 1, name: 'Sadin', time: '08:00', late: false, editing: false
 }
 
 export function reducerMeetup(state: Meetup[] = [initialStateDailyscrum], action: MeetupActions.Actions) {
@@ -25,6 +25,13 @@ export function reducerMeetup(state: Meetup[] = [initialStateDailyscrum], action
           return state;
         case MeetupActions.CANCEL_ENTRY:
           state[action.payload].editing = false;
+          return state;
+        case MeetupActions.CHANGE_NAMES:
+          for (let i = 0; i <= state.length - 1; i++) {
+               if (action.payloadId === state[i].userId) {
+                    state[i].name = action.payloadNewName;                    
+               }
+          }
           return state;
         default:
             return state;

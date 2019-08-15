@@ -48,6 +48,7 @@ export class MeetingsComponent implements OnInit {
      ) { 
           this.workers = store.select('worker');
           this.dailyscrum = store.select('meetup');
+          console.log('test: ', this.workers);
      }
 
      ngOnInit() {
@@ -107,9 +108,9 @@ export class MeetingsComponent implements OnInit {
 
           let sekunde = (m * 60) + ((h * 60) * 60); // Broj sekundi koje treba uporediti.
           if (sekunde > prag_dolaska)
-               newlatevalue = false;
-          else
                newlatevalue = true;
+          else
+               newlatevalue = false;
 
           if (h >= 0 && h < 24) { // Ovo su pravilno uneseni sati.
                uslov_h = true;

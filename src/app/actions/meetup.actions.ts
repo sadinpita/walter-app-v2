@@ -7,6 +7,7 @@ export const REMOVE_ENTRY    = '[ENTRY] Remove'
 export const EDIT_ENTRY      = '[ENTRY] Edit'
 export const SAVE_ENTRY      = '[ENTRY] Save'
 export const CANCEL_ENTRY    = '[ENTRY] Cancel'
+export const CHANGE_NAMES    = '[ENTRY] Change'
 
 export class AddEntry implements Action {
     readonly type = ADD_ENTRY
@@ -38,4 +39,12 @@ export class CancelEntry implements Action {
      constructor(public payload: number) {}
 }
 
-export type Actions = AddEntry | RemoveEntry | EditEntry | SaveEntry | CancelEntry
+export class ChangeNames implements Action {
+     readonly type = CHANGE_NAMES
+ 
+     constructor(public payloadId: number, public payloadNewName: string) {}
+}
+
+
+
+export type Actions = AddEntry | RemoveEntry | EditEntry | SaveEntry | CancelEntry | ChangeNames
