@@ -8,52 +8,47 @@
 
      <button mat-button (click)="openAddEntryDialog()" class="add-entry-btn">Dodaj unos</button>
      
-     <div class="pre-scrollable">
-          <table class="table dailyentries-table">
-               <thead>
-               <tr>
-                    <th scope="col">Opcije</th>
-                    <th scope="col">Ime uposlenika</th>
-                    <th scope="col">Vrijeme dolaska</th>
-                    <th scope="col">Stigao na vrijeme</th>
+     <table class="meetups-wrapper">
+          <tbody>
+               <tr *ngFor="let entry of dailyscrum | async | search:['name', searchText]; let i = index;">
+                    <div *ngIf="entry.editing == false" [className]="entry.late === true ? 'late-background worker-single' : 'notlate-background worker-single'">
+                                                  
+                         <div>
+                              {{entry.name}}
+                              {{entry.time}}
+                              <!-- {{entry.late}} -->
+                         </div>
+
+                         <div class="scrum-btns">
+                              <fa-icon [icon]="faEdit" (click)="editEntry(i);" class="edit-scrum-icon"></fa-icon>
+                              <fa-icon [icon]="faUserSlash" (click)="delEntry(i);" style="margin-left: 2px;" class="delete-scrum-icon"></fa-icon>
+                         </div>
+                    </div>
+
+
+                    <div *ngIf="entry.editing == true" [className]="entry.late === true ? 'late-background worker-single' : 'notlate-background worker-single'">
+                                                  
+                         <div>
+                              <mat-form-field>
+                                   <mat-select placeholder="Select" [(ngModel)]="selectedValueName" ngDefaultControl>
+                                        <mat-option *ngFor="let worker of listOfWorkers" value="{{worker.name}}">{{worker.name}}</mat-option>
+                                   </mat-select>
+                              </mat-form-field>
+
+                              <mat-form-field class="example-full-width" [(ngModel)]="selectedValueTime" ngDefaultControl>
+                                   <input matInput placeholder='Prethodna vrijednost: {{entry.time}}'>
+                              </mat-form-field>
+                         </div>
+                         
+
+                         <div class="scrum-btns">
+                              <fa-icon [icon]="faSave" (click)="saveEntry(i, selectedValueName, selectedValueTime);" class="edit-scrum-icon"></fa-icon>
+                              <fa-icon [icon]="faUndo" (click)="cancelEntry(i);" style="margin-left: 2px;" class="edit-scrum-icon"></fa-icon>
+                         </div>
+                    </div>
+
                </tr>
-               </thead>
-               
-               <tbody *ngFor="let entry of dailyscrum | async | search:['name', searchText]; let i = index;">
-               <tr *ngIf="entry.editing == false">
-                    <th scope="row">
-                         <fa-icon [icon]="faEdit" (click)="editEntry(i);" class="edit-scrum-icon"></fa-icon>
-                         <fa-icon [icon]="faUserSlash" (click)="delEntry(i);" style="margin-left: 2px;" class="delete-scrum-icon"></fa-icon>
-                    </th>
-                    <td>{{entry.name}}</td>
-                    <td>{{entry.time}}</td>
-                    <td>{{entry.late}}</td>
-               </tr>
-               <tr *ngIf="entry.editing == true;">
-                    <th scope="row">
-                         <fa-icon [icon]="faSave" (click)="saveEntry(i, selectedValueName, selectedValueTime);" class="edit-scrum-icon"></fa-icon>
-                         <fa-icon [icon]="faUndo" (click)="cancelEntry(i);" style="margin-left: 2px;" class="edit-scrum-icon"></fa-icon>
-                    </th>
-
-                    <td>
-                         <mat-form-field>
-                              <mat-select placeholder="Select" [(ngModel)]="selectedValueName" ngDefaultControl>
-                                   <mat-option *ngFor="let worker of listOfWorkers" value="{{worker.name}}">{{worker.name}}</mat-option>
-                              </mat-select>
-                         </mat-form-field>
-                    </td>
-
-                    <td>
-                         <mat-form-field class="example-full-width" [(ngModel)]="selectedValueTime" ngDefaultControl>
-                              <input matInput placeholder='Prethodna vrijednost: {{entry.time}}'>
-                         </mat-form-field>
-                    </td>
-
-
-                    <td>{{entry.late}}</td>
-               </tr>
-               </tbody>
-          </table>
-     </div>
+          </tbody>
+     </table>
 
 </div>

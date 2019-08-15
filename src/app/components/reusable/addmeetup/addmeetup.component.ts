@@ -66,9 +66,9 @@ export class AddMeetupDialog implements OnInit {
 
           let sekunde = (m * 60) + ((h * 60) * 60); // Broj sekundi koje treba uporediti.
           if(sekunde > prag_dolaska)
-               late = false;
-          else
                late = true;
+          else
+               late = false;
 
           if(h >= 0 && h < 24) { // Ovo su pravilno uneseni sati.
                uslov_h = true;
@@ -78,7 +78,7 @@ export class AddMeetupDialog implements OnInit {
                uslov_m = true;
           }
 
-
+          console.log('2: ', newId, name, time, late);
           this.store.dispatch(new MeetupActions.AddEntry({id: newId, name: name, time: time, late: late, editing: false}) )
      }
 

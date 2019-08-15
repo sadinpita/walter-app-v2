@@ -21,6 +21,7 @@ export function reducerMeetup(state: Meetup[] = [initialStateDailyscrum], action
           state[action.payload].editing = false;
           state[action.payload].name = action.payloadNewName;
           state[action.payload].time = action.payloadNewTime;
+          state[action.payload].late = action.newlatevalue;
           return state;
         case MeetupActions.CANCEL_ENTRY:
           state[action.payload].editing = false;

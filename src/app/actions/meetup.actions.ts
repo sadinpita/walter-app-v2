@@ -29,7 +29,7 @@ export class EditEntry implements Action {
 export class SaveEntry implements Action {
      readonly type = SAVE_ENTRY
  
-     constructor(public payload: number, public payloadNewName: string, public payloadNewTime: string) {}
+     constructor(public payload: number, public payloadNewName: string, public payloadNewTime: string, public newlatevalue: boolean) {}
 }
 
 export class CancelEntry implements Action {
