@@ -1,22 +1,24 @@
 .add-worker-btn {
      background-color: #3f51b5;
      color: white;
+     float: right;
+     margin-top: 20px;
 }
 
 .workers-wrapper {
-     background-color: #f9f9f9;
+     background-color: #f7f7f7;
      padding: 20px;
-     margin-top: 50px;
+     margin-top: 20px;
      border-radius: 3px;
      width: 100%;
 }
 
 table tr:nth-child(2n) {
-     background-color: #fefefe !important;
+     background-color: #ffffff !important;
 }
 
 table tr:nth-child(2n-1) {
-     background-color: #f5f5f5;
+     background-color: #fefefe;
 }
 
 table tr {
@@ -43,7 +45,7 @@ table tr:hover {
 }
 
 .w-btn {
-     line-height: 16px;
+     line-height: 25px;
      font-size: 12px;
      margin: 3px;
 }

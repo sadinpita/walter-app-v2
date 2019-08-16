@@ -10,6 +10,8 @@ import { Worker } from '../../models/worker.model';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AddWorkerDialog } from '../reusable/addworker/addworker.component';
 
+import { faEdit, faUserSlash, faSave, faUndo, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+
 export interface DialogData {
      name: string;
 }
@@ -22,6 +24,11 @@ export interface DialogData {
 
 export class WorkersComponent implements OnInit {
 
+     faEdit = faEdit;
+     faUserSlash = faUserSlash;
+     faSave = faSave;
+     faUndo = faUndo;
+     faPlusSquare = faPlusSquare;
      name: string;
      workers: Observable<Worker[]>;
      workersCount: number;
@@ -79,6 +86,10 @@ export class WorkersComponent implements OnInit {
           this.store.dispatch(new WorkerActions.SaveWorker(index, newname));
           this.changeNameInMeetups(id, newname);
           this.checkWorkersCount();
+     }
+
+     cancelEdit (index) {
+          this.store.dispatch(new WorkerActions.CancelEdit(index));
      }
 
      checkWorkersCount () {

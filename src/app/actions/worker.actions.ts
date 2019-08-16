@@ -6,6 +6,7 @@ export const ADD_WORKER       = '[WORKER] Add'
 export const REMOVE_WORKER    = '[WORKER] Remove'
 export const EDIT_WORKER      = '[WORKER] Edit'
 export const SAVE_WORKER      = '[WORKER] Save'
+export const CANCEL_EDIT      = '[WORKER] Cancel'
 
 export class AddWorker implements Action {
     readonly type = ADD_WORKER
@@ -31,4 +32,10 @@ export class SaveWorker implements Action {
      constructor(public payload: number, public payloadNewName: string) {}
 }
 
-export type Actions = AddWorker | RemoveWorker | EditWorker | SaveWorker
+export class CancelEdit implements Action {
+     readonly type = CANCEL_EDIT
+ 
+     constructor(public payload: number) {}
+}
+
+export type Actions = AddWorker | RemoveWorker | EditWorker | SaveWorker | CancelEdit

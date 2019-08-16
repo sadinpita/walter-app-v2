@@ -29,6 +29,9 @@ export function reducerWorker(state: Worker[] = [initialStateWorker], action: Wo
           state[action.payload].editing = false;
           state[action.payload].name = action.payloadNewName;
           return state;
+        case WorkerActions.CANCEL_EDIT:
+          state[action.payload].editing = false;
+          return state;
         default:
             return state;
     }

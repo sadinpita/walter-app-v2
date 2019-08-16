@@ -12,7 +12,7 @@ import { AddMeetupDialog } from '../reusable/addmeetup/addmeetup.component';
 
 import * as MeetupActions from '../../actions/meetup.actions';
 
-import { faEdit, faUserSlash, faSave, faUndo } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faUserSlash, faSave, faUndo, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 
 export interface DialogData {
      name: string;
@@ -31,6 +31,7 @@ export class MeetingsComponent implements OnInit {
      faUserSlash = faUserSlash;
      faSave = faSave;
      faUndo = faUndo;
+     faPlusSquare = faPlusSquare;
 
      selectedValueTime = '';
      selectedValueName = '';
@@ -80,6 +81,10 @@ export class MeetingsComponent implements OnInit {
      }
 
      saveEntry (index, newname, newtime) {
+          if (newname == '' || newtime == '') {
+               console.log('prazno je: ', newname, newtime);
+               return 1;
+          }
           console.log('saveaj entry: ', index, newname, newtime);
 
           let dailyentries = null;

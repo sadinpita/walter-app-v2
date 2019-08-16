@@ -70,7 +70,6 @@ export class AddMeetupDialog implements OnInit {
           }
 
           let newId = max + 1;
-          console.log('newId: ', newId);
 
           let vrijemeDolaska = time;
           let late: boolean;

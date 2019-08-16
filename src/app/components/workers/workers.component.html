@@ -5,17 +5,14 @@
           </mat-form-field>
      </div>
 
-     <button mat-button (click)="openDialog()" class="add-worker-btn">Dodaj radnika</button>
-
-
-     <table class="workers-wrapper">
+     <table class="workers-wrapper mat-elevation-z2">
           <tbody>
                <tr *ngFor="let worker of workers | async | search:['name', searchText]; let i = index;">
                     <div *ngIf="worker.editing === false" class="worker-single">
                          {{worker.name}}
                          <div class="worker-single-btns">
-                              <button mat-stroked-button color="primary" class="w-btn" (click)="editWorker(i, worker.id)">Izmijeni</button>
-                              <button mat-stroked-button color="accent" class="ml-10 w-btn" (click)="delWorker(i, worker.id)">Obriši</button>
+                              <button mat-stroked-button color="primary" class="w-btn" (click)="editWorker(i, worker.id)"><fa-icon [icon]="faEdit" class="edit-scrum-icon"></fa-icon> Izmijeni</button>
+                              <button mat-stroked-button color="accent" class="ml-10 w-btn" (click)="delWorker(i, worker.id)"><fa-icon [icon]="faUserSlash" style="margin-left: 2px;" class="delete-scrum-icon"></fa-icon> Obriši</button>
                          </div>
                     </div>
      
@@ -24,15 +21,14 @@
                               <input matInput placeholder="Unesi ime" value="{{worker.name}}" #newname>
                          </mat-form-field>
                          <div class="worker-single-btns">
-                              <button mat-stroked-button color="primary" class="w-btn" (click)="saveWorker(i, newname.value, worker.id)">Spremi</button>
-                              <button mat-stroked-button color="accent" class="ml-10 w-btn" disabled>Obriši</button>
+                              <button mat-stroked-button color="primary" class="w-btn" (click)="saveWorker(i, newname.value, worker.id)"><fa-icon [icon]="faSave" class="edit-scrum-icon"></fa-icon> Spremi</button>
+                              <button mat-stroked-button color="accent" class="ml-10 w-btn" (click)="cancelEdit(i);"><fa-icon [icon]="faUndo" style="margin-left: 2px;" class="edit-scrum-icon"></fa-icon> Odustani</button>
                          </div>
                     </div>
      
                </tr>
           </tbody>
-          
      </table>
-     
 
+     <button mat-button (click)="openDialog()" class="add-worker-btn"><fa-icon [icon]="faPlusSquare" class="edit-scrum-icon"></fa-icon> Dodaj radnika</button>
 </div>

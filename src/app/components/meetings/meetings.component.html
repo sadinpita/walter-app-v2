@@ -6,13 +6,11 @@
           </mat-form-field>
      </div>
 
-     <button mat-button (click)="openAddEntryDialog()" class="add-entry-btn">Dodaj unos</button>
      
-     <table class="meetups-wrapper">
+     <table class="meetups-wrapper mat-elevation-z2">
           <tbody>
                <tr *ngFor="let entry of dailyscrum | async | search:['name', searchText]; let i = index;">
                     <div *ngIf="entry.editing == false" [className]="entry.late === true ? 'late-background worker-single' : 'notlate-background worker-single'">
-                                                  
                          <div>
                               {{entry.name}}
                               {{entry.time}}
@@ -20,35 +18,34 @@
                          </div>
 
                          <div class="scrum-btns">
-                              <fa-icon [icon]="faEdit" (click)="editEntry(i);" class="edit-scrum-icon"></fa-icon>
-                              <fa-icon [icon]="faUserSlash" (click)="delEntry(i);" style="margin-left: 2px;" class="delete-scrum-icon"></fa-icon>
+                              <button mat-stroked-button color="primary" class="w-btn" (click)="editEntry(i);"><fa-icon [icon]="faEdit" class="edit-scrum-icon"></fa-icon> Izmijeni</button>
+                              <button mat-stroked-button color="accent" class="ml-10 w-btn" (click)="delEntry(i);"><fa-icon [icon]="faUserSlash" style="margin-left: 2px;" class="delete-scrum-icon"></fa-icon> Obriši</button>
                          </div>
                     </div>
 
 
-                    <div *ngIf="entry.editing == true" [className]="entry.late === true ? 'late-background worker-single' : 'notlate-background worker-single'">
-                                                  
+                    <div *ngIf="entry.editing == true" class="edit-color">
                          <div>
-                              <mat-form-field>
+                              <mat-form-field class="first-field">
                                    <mat-select placeholder="Select" [(ngModel)]="selectedValueName" ngDefaultControl>
                                         <mat-option *ngFor="let worker of listOfWorkers" value="{{worker.name}}">{{worker.name}}</mat-option>
                                    </mat-select>
                               </mat-form-field>
 
-                              <mat-form-field class="example-full-width" [(ngModel)]="selectedValueTime" ngDefaultControl>
+                              <mat-form-field class="second-field" [(ngModel)]="selectedValueTime" ngDefaultControl>
                                    <input matInput placeholder='Prethodna vrijednost: {{entry.time}}'>
                               </mat-form-field>
                          </div>
-                         
 
                          <div class="scrum-btns">
-                              <fa-icon [icon]="faSave" (click)="saveEntry(i, selectedValueName, selectedValueTime);" class="edit-scrum-icon"></fa-icon>
-                              <fa-icon [icon]="faUndo" (click)="cancelEntry(i);" style="margin-left: 2px;" class="edit-scrum-icon"></fa-icon>
+                              <button mat-stroked-button color="primary" class="w-btn" (click)="saveEntry(i, selectedValueName, selectedValueTime);"><fa-icon [icon]="faSave" class="edit-scrum-icon"></fa-icon> Spremi</button>
+                              <button mat-stroked-button color="accent" class="ml-10 w-btn" (click)="cancelEntry(i);"><fa-icon [icon]="faUndo" style="margin-left: 2px;" class="edit-scrum-icon"></fa-icon> Odustani</button>
                          </div>
                     </div>
-
                </tr>
           </tbody>
      </table>
+
+     <button mat-button (click)="openAddEntryDialog()" class="add-entry-btn"><fa-icon [icon]="faPlusSquare" class="edit-scrum-icon"></fa-icon> Dodaj unos</button>
 
 </div>
