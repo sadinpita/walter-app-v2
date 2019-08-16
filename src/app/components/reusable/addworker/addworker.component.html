@@ -1,11 +1,16 @@
 <h1 mat-dialog-title>Dodavanje novog radnika</h1>
 <div mat-dialog-content>
-  <p>Unesite ime novog radnika u prazno polje.</p>
-  <mat-form-field style="width: 100%;">
-    <input matInput  #name>
-  </mat-form-field>
+     <p>Unesite ime novog radnika u prazno polje.</p>
+
+     <mat-form-field style="width: 100%;">
+     <input matInput  #name>
+     </mat-form-field>
+
+     <div class="errorMsg" *ngIf="errorMsg">
+          * Niste unijeli ime!
+     </div>
 </div>
 <div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="data.name" cdkFocusInitial (click)="addWorker(name.value)">Dodaj</button>
+  <button mat-button cdkFocusInitial (click)="addWorker(name.value)">Dodaj</button>
   <button mat-button (click)="onNoClick()">Odustani</button>
 </div>

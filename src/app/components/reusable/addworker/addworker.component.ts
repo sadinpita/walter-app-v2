@@ -15,6 +15,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 
 export class AddWorkerDialog implements OnInit {
 
+     errorMsg = false;
+
      constructor(
           private store: Store<AppState>,
           public dialogRef: MatDialogRef<AddWorkerDialog>,
@@ -28,14 +30,16 @@ export class AddWorkerDialog implements OnInit {
      }
 
      addWorker(name: string) {
-          let radnici = null;
-
-          this.store.select(state => state).subscribe(data => {
-               radnici = data.worker
-          });
-
-          let newId = radnici.length + 1;
-
-          this.store.dispatch(new WorkerActions.AddWorker({id: newId, name: name, editing: false}) )
+          if (name == '') {
+               this.errorMsg = true;
+          } else {
+               let radnici = null;
+               this.store.select(state => state).subscribe(data => {
+                    radnici = data.worker
+               });
+               let newId = radnici.length + 1;
+               this.store.dispatch(new WorkerActions.AddWorker({id: newId, name: name, editing: false}) )
+               this.dialogRef.close();
+          }
      }
 }
