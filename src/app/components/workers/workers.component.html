@@ -5,7 +5,17 @@
           </mat-form-field>
      </div>
 
-     <table class="workers-wrapper mat-elevation-z2">
+     <div class="meetups-wrapper error-msg mat-elevation-z2" *ngIf="errorMsgShow">
+          <fa-icon [icon]="faExclamationTriangle"></fa-icon>
+          <span style="margin-left: 5px;">{{errorMsg}}</span>
+     </div>
+
+     <div class="meetups-wrapper workers-msg mat-elevation-z2" *ngIf="workersRaw.length == 0">
+          <fa-icon [icon]="faExclamationTriangle"></fa-icon>
+          Trenutno nema unesenih radnika!
+     </div>
+
+     <table class="workers-wrapper mat-elevation-z2" *ngIf="workersRaw.length > 0">
           <tbody>
                <tr *ngFor="let worker of workers | async | search:['name', searchText]; let i = index;">
                     <div *ngIf="worker.editing === false" class="worker-single">

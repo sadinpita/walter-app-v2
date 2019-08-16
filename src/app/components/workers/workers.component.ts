@@ -10,7 +10,7 @@ import { Worker } from '../../models/worker.model';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AddWorkerDialog } from '../reusable/addworker/addworker.component';
 
-import { faEdit, faUserSlash, faSave, faUndo, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faUserSlash, faSave, faUndo, faPlusSquare, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 export interface DialogData {
      name: string;
@@ -29,9 +29,13 @@ export class WorkersComponent implements OnInit {
      faSave = faSave;
      faUndo = faUndo;
      faPlusSquare = faPlusSquare;
+     faExclamationTriangle = faExclamationTriangle;
      name: string;
      workers: Observable<Worker[]>;
      workersCount: number;
+     workersRaw = null;
+     errorMsgShow = false;
+     errorMsg = '';
 
      constructor (
           private store: Store<AppState>,
@@ -43,6 +47,7 @@ export class WorkersComponent implements OnInit {
      ngOnInit() {
           this.checkWorkersCount();
           this.store.select(state => state).subscribe(data => {
+               this.workersRaw = data.worker;
           });
      }
 
@@ -83,9 +88,18 @@ export class WorkersComponent implements OnInit {
      }
 
      saveWorker (index, newname, id: number) {
-          this.store.dispatch(new WorkerActions.SaveWorker(index, newname));
-          this.changeNameInMeetups(id, newname);
-          this.checkWorkersCount();
+          if (newname == '') {
+               this.errorMsg = 'Ne možete spasiti unos jer niste unijeli ime.';
+               this.errorMsgShow = true;
+               setTimeout(function () {
+                    this.errorMsgShow = false;
+               }, 3000);
+               this.cancelEdit(index);
+          } else {
+               this.store.dispatch(new WorkerActions.SaveWorker(index, newname));
+               this.changeNameInMeetups(id, newname);
+               this.checkWorkersCount();
+          }
      }
 
      cancelEdit (index) {

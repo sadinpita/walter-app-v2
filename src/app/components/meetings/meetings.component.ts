@@ -12,7 +12,7 @@ import { AddMeetupDialog } from '../reusable/addmeetup/addmeetup.component';
 
 import * as MeetupActions from '../../actions/meetup.actions';
 
-import { faEdit, faUserSlash, faSave, faUndo, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faUserSlash, faSave, faUndo, faPlusSquare, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 export interface DialogData {
      name: string;
@@ -32,14 +32,19 @@ export class MeetingsComponent implements OnInit {
      faSave = faSave;
      faUndo = faUndo;
      faPlusSquare = faPlusSquare;
+     faExclamationTriangle = faExclamationTriangle;
 
      selectedValueTime = '';
      selectedValueName = '';
 
+     errorMsgShow = false;
+     errorMsg = '';
+
      name: string;
 
      workers: Observable<Worker[]>;
-     dailyscrum: Observable<Meetup[]>;
+     meetings: Observable<Meetup[]>;
+     meetingsRaw = null;
 
      listOfWorkers = null;
 
@@ -48,13 +53,14 @@ export class MeetingsComponent implements OnInit {
           public dialog: MatDialog
      ) { 
           this.workers = store.select('worker');
-          this.dailyscrum = store.select('meetup');
+          this.meetings = store.select('meetup');
           console.log('test: ', this.workers);
      }
 
      ngOnInit() {
           this.store.select(state => state).subscribe(data => {
-               this.listOfWorkers = data.worker
+               this.listOfWorkers = data.worker;
+               this.meetingsRaw = data.meetup;
           });
      }
 
@@ -65,68 +71,68 @@ export class MeetingsComponent implements OnInit {
           });
 
           dialogRef.afterClosed().subscribe(result => {
-               console.log('The dialog was closed');
                this.name = result;
           });
      }
 
      editEntry (index) {
           this.store.dispatch(new MeetupActions.EditEntry(index));
-          // this.workers[index].editing = true;
+          this.selectedValueName = this.listOfWorkers[index].name;
      }
 
      delEntry (index) {
           this.store.dispatch(new MeetupActions.RemoveEntry(index));
-          // this.checkWorkersCount();
      }
 
      saveEntry (index, newname, newtime) {
           if (newname == '' || newtime == '') {
-               console.log('prazno je: ', newname, newtime);
-               return 1;
+               this.errorMsg = 'Ne možete spasiti unos jer niste unijeli ime / vrijeme.';
+               this.errorMsgShow = true;
+               setTimeout(function () {
+                    this.errorMsgShow = false;
+               }, 3000);
+               this.cancelEntry(index);
+          } else {
+               let dailyentries = null;
+               this.store.select(state => state).subscribe(data => {
+                    dailyentries = data.worker
+               });
+
+               let newId = dailyentries.length + 1;
+               let vrijemeDolaska = newtime;
+               let newlatevalue: boolean;
+
+               let uslov_h = false;
+               let uslov_m = false;
+
+               const prag_dolaska = 31500; // Broj sekundi koji je ustvari 8 sati i 45 minuta (8:45 je prag dolaska na vrijeme).
+
+               let fields = vrijemeDolaska.split(':');
+               console.log('evo fieldsa save: ', fields);
+
+               let hours = fields[0];
+               let minutes = fields[1];
+
+               let h = Number(hours);
+               let m = Number(minutes);
+
+               let sekunde = (m * 60) + ((h * 60) * 60); // Broj sekundi koje treba uporediti.
+               if (sekunde > prag_dolaska)
+                    newlatevalue = true;
+               else
+                    newlatevalue = false;
+
+               if (h >= 0 && h < 24) { // Ovo su pravilno uneseni sati.
+                    uslov_h = true;
+               }
+
+               if (m >= 0 && m < 60) { // Ovo su pravilno unesene minute.
+                    uslov_m = true;
+               }
+
+               this.store.dispatch(new MeetupActions.SaveEntry(index, newname, newtime, newlatevalue));
+               // this.checkWorkersCount();
           }
-          console.log('saveaj entry: ', index, newname, newtime);
-
-          let dailyentries = null;
-
-          this.store.select(state => state).subscribe(data => {
-               dailyentries = data.worker
-          });
-
-          let newId = dailyentries.length + 1;
-          let vrijemeDolaska = newtime;
-          let newlatevalue: boolean;
-
-          let uslov_h = false;
-          let uslov_m = false;
-
-          const prag_dolaska = 31500; // Broj sekundi koji je ustvari 8 sati i 45 minuta (8:45 je prag dolaska na vrijeme).
-
-          let fields = vrijemeDolaska.split(':');
-          console.log('evo fieldsa save: ', fields);
-
-          let hours = fields[0];
-          let minutes = fields[1];
-
-          let h = Number(hours);
-          let m = Number(minutes);
-
-          let sekunde = (m * 60) + ((h * 60) * 60); // Broj sekundi koje treba uporediti.
-          if (sekunde > prag_dolaska)
-               newlatevalue = true;
-          else
-               newlatevalue = false;
-
-          if (h >= 0 && h < 24) { // Ovo su pravilno uneseni sati.
-               uslov_h = true;
-          }
-
-          if (m >= 0 && m < 60) { // Ovo su pravilno unesene minute.
-               uslov_m = true;
-          }
-
-          this.store.dispatch(new MeetupActions.SaveEntry(index, newname, newtime, newlatevalue));
-          // this.checkWorkersCount();
      }
 
      cancelEntry (index) {

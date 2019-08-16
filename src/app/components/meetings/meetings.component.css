@@ -13,6 +13,16 @@
      width: 100%;
 }
 
+.meetups-msg {
+     color: #a5a5a5;
+     font-size: 13px;
+     text-align: center;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     flex-direction: column;
+}
+
 table tr:nth-child(2n) {
      background-color: #fefefe !important;
 }
@@ -87,4 +97,21 @@ table tr:hover {
      position: absolute;
      left: 200px;
      top: 4px;
+}
+
+span.time {
+     font-weight: bold;
+     margin-left: 10px;
+}
+
+.error-msg {
+     color: #a5a5a5;
+     font-size: 13px;
+     text-align: left;
+     display: flex;
+     flex-direction: row;
+     color: white;
+     background-color: #ff3737;
+     padding: 10px;
+     width: 40%;
 }

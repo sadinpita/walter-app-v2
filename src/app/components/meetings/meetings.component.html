@@ -6,15 +6,22 @@
           </mat-form-field>
      </div>
 
-     
-     <table class="meetups-wrapper mat-elevation-z2">
+     <div class="meetups-wrapper error-msg mat-elevation-z2" *ngIf="errorMsgShow">
+          <fa-icon [icon]="faExclamationTriangle"></fa-icon>
+          <span style="margin-left: 5px;">{{errorMsg}}</span>
+     </div>
+
+     <div class="meetups-wrapper meetups-msg mat-elevation-z2" *ngIf="meetingsRaw.length == 0">
+          <fa-icon [icon]="faExclamationTriangle"></fa-icon>
+          Trenutno nema unesenih sastanaka!
+     </div>
+     <table class="meetups-wrapper mat-elevation-z2" *ngIf="meetingsRaw.length > 0">
           <tbody>
-               <tr *ngFor="let entry of dailyscrum | async | search:['name', searchText]; let i = index;">
+               <tr *ngFor="let entry of meetings | async | search:['name', searchText]; let i = index;">
                     <div *ngIf="entry.editing == false" [className]="entry.late === true ? 'late-background worker-single' : 'notlate-background worker-single'">
-                         <div>
-                              {{entry.name}}
-                              {{entry.time}}
-                              <!-- {{entry.late}} -->
+                         <div style="display: flex; flex-direction: row;">
+                              <span style="display: flex;">{{entry.name}}</span>
+                              <span class="time">{{entry.time}}</span>
                          </div>
 
                          <div class="scrum-btns">
