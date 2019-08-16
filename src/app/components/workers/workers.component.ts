@@ -91,7 +91,7 @@ export class WorkersComponent implements OnInit {
           if (newname == '') {
                this.errorMsg = 'Ne možete spasiti unos jer niste unijeli ime.';
                this.errorMsgShow = true;
-               setTimeout(function () {
+               setTimeout(() => {
                     this.errorMsgShow = false;
                }, 3000);
                this.cancelEdit(index);

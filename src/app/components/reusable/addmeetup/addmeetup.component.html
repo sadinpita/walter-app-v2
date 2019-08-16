@@ -8,14 +8,19 @@
           </mat-select>
      </mat-form-field>
 
+     <div>
+          Unesite vrijeme u formatu hh:mm. Npr. 12:00.
+     </div>
+
+     <div class="errorMsg" *ngIf="errorMsg">
+          * Unijeli ste pogrešan format za vrijeme!
+     </div>
      <mat-form-field style="width: 100%;">
-               <input matInput #time>
+               <input matInput #time >
      </mat-form-field>
 
 </div>
 <div mat-dialog-actions>
-     <button mat-button [mat-dialog-close]="data.name" cdkFocusInitial (click)="addEntry(selectedValue, time.value)">Dodaj</button>
-     <button mat-button (click)="onNoClick()">Odustani</button>
+     <button mat-button cdkFocusInitial (click)="addEntry(selectedValue, time.value)">Dodaj</button>
+     <button mat-button (click)="onNoClick()" type="button">Odustani</button>
 </div>
-
-

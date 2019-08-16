@@ -10,7 +10,6 @@ import { Worker } from '../../../models/worker.model';
 import { DialogData } from '../../meetings/meetings.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-
 @Component({
   selector: 'app-addmeetup',
   templateUrl: './addmeetup.component.html',
@@ -22,6 +21,7 @@ export class AddMeetupDialog implements OnInit {
      workers = null;
      selectedValue: string;
      currentId: number;
+     errorMsg = false;
 
      constructor (
           private store: Store<AppState>,
@@ -43,22 +43,18 @@ export class AddMeetupDialog implements OnInit {
      }
 
      addEntry  (workerId: number, time: string, id: any) {
-          console.log('addEntry id: ', workerId);
           let workerName = null;
           let workersArr = null;
           let dailyentries = null;
 
           this.store.select(state => state).subscribe(data => {
-               console.log('dataX: ', data);
                dailyentries = data.meetup
                workersArr = data.worker
           });
 
           for (let i = 0; i <= workersArr.length - 1; i++) {
-               console.log('workerId: ', workerId, ' workersArr[i]: ', workersArr[i].id);
                if (workersArr[i].id == workerId) {
                     workerName = workersArr[i].name;
-                    console.log('izmijenio sam ime: ', workerName);
                }
           }
 
@@ -93,17 +89,21 @@ export class AddMeetupDialog implements OnInit {
           else
                late = false;
 
-          if(h >= 0 && h < 24) { // Ovo su pravilno uneseni sati.
+          if (h >= 0 && h < 24) { // Ovo su pravilno uneseni sati.
                uslov_h = true;
           }
 
-          if(m >= 0 && m < 60) { // Ovo su pravilno unesene minute.
+          if (m >= 0 && m < 60) { // Ovo su pravilno unesene minute.
                uslov_m = true;
           }
 
-          this.store.dispatch(new MeetupActions.AddEntry({id: newId, userId: this.currentId, name: workerName, time: time, late: late, editing: false}) )
+          if (uslov_h == true && uslov_m == true) {
+               this.store.dispatch(new MeetupActions.AddEntry({id: newId, userId: this.currentId, name: workerName, time: time, late: late, editing: false}) );
+               this.dialogRef.close();
+               this.errorMsg = false;
+          }
+          else {
+               this.errorMsg = true;
+          }
      }
-
-     
 }
-

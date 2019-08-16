@@ -3,9 +3,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.state';
 import * as WorkerActions from '../../../actions/worker.actions';
-import { Observable } from 'rxjs';
 
-import { Worker } from '../../../models/worker.model';
 import { DialogData } from '../../workers/workers.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 

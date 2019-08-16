@@ -65,13 +65,13 @@ table tr:hover {
 }
 
 .late-background .scrum-btns .w-btn {
-     color: white;
-     border-color: white;
+     /* color: dimgrey; */
+     /* border-color: dimgrey; */
 }
 
 .late-background {
-     background-color: #fb4d4d;
-     color: white;
+     background-color: #d6d6d6;
+     color: dimgrey;
 }
 
 .notlate-background {
@@ -101,6 +101,10 @@ table tr:hover {
 
 span.time {
      font-weight: bold;
+     margin-left: 10px;
+}
+
+span.late {
      margin-left: 10px;
 }
 

@@ -54,7 +54,6 @@ export class MeetingsComponent implements OnInit {
      ) { 
           this.workers = store.select('worker');
           this.meetings = store.select('meetup');
-          console.log('test: ', this.workers);
      }
 
      ngOnInit() {
@@ -88,7 +87,7 @@ export class MeetingsComponent implements OnInit {
           if (newname == '' || newtime == '') {
                this.errorMsg = 'Ne možete spasiti unos jer niste unijeli ime / vrijeme.';
                this.errorMsgShow = true;
-               setTimeout(function () {
+               setTimeout(() => {
                     this.errorMsgShow = false;
                }, 3000);
                this.cancelEntry(index);
@@ -108,7 +107,6 @@ export class MeetingsComponent implements OnInit {
                const prag_dolaska = 31500; // Broj sekundi koji je ustvari 8 sati i 45 minuta (8:45 je prag dolaska na vrijeme).
 
                let fields = vrijemeDolaska.split(':');
-               console.log('evo fieldsa save: ', fields);
 
                let hours = fields[0];
                let minutes = fields[1];
@@ -130,13 +128,21 @@ export class MeetingsComponent implements OnInit {
                     uslov_m = true;
                }
 
-               this.store.dispatch(new MeetupActions.SaveEntry(index, newname, newtime, newlatevalue));
-               // this.checkWorkersCount();
+               if (uslov_h == true && uslov_m == true) {
+                    this.store.dispatch(new MeetupActions.SaveEntry(index, newname, newtime, newlatevalue));
+               }
+               else {
+                    this.errorMsg = 'Ne možete spasiti unos jer niste unijeli ispravan format za vrijeme.';
+                    this.errorMsgShow = true;
+                    setTimeout(() => {
+                         this.errorMsgShow = false;
+                    }, 3000);
+                    this.cancelEntry(index);
+               }
           }
      }
 
      cancelEntry (index) {
           this.store.dispatch(new MeetupActions.CancelEntry(index));
      }
-
 }

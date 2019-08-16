@@ -45,6 +45,4 @@ export class ChangeNames implements Action {
      constructor(public payloadId: number, public payloadNewName: string) {}
 }
 
-
-
 export type Actions = AddEntry | RemoveEntry | EditEntry | SaveEntry | CancelEntry | ChangeNames

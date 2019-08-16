@@ -22,6 +22,7 @@
                          <div style="display: flex; flex-direction: row;">
                               <span style="display: flex;">{{entry.name}}</span>
                               <span class="time">{{entry.time}}</span>
+                              <span class="late" *ngIf="entry.late">Zakasnio</span>
                          </div>
 
                          <div class="scrum-btns">
@@ -29,8 +30,6 @@
                               <button mat-stroked-button color="accent" class="ml-10 w-btn" (click)="delEntry(i);"><fa-icon [icon]="faUserSlash" style="margin-left: 2px;" class="delete-scrum-icon"></fa-icon> Obriši</button>
                          </div>
                     </div>
-
-
                     <div *ngIf="entry.editing == true" class="edit-color">
                          <div>
                               <mat-form-field class="first-field">
@@ -54,5 +53,4 @@
      </table>
 
      <button mat-button (click)="openAddEntryDialog()" class="add-entry-btn"><fa-icon [icon]="faPlusSquare" class="edit-scrum-icon"></fa-icon> Dodaj unos</button>
-
 </div>
